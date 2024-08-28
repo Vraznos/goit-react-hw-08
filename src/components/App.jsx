@@ -3,12 +3,14 @@ import Navigation from "../components/Navigation/Navigation.jsx";
 
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import MoviePage from "../pages/MoviesPage/MoviesPage.jsx";
+import MoviePage from "../temp_page_petrol/MoviesPage/MoviesPage.jsx";
 
 const MovieDetailPage = lazy(() =>
-  import("../pages/MovieDetailsPage/MovieDetailsPage.jsx")
+  import("../temp_page_petrol/MovieDetailsPage/MovieDetailsPage.jsx")
 );
-const HomePage = lazy(() => import("../pages/HomePage/HomePage.jsx"));
+const HomePage = lazy(() =>
+  import("../temp_page_petrol/HomePage/HomePage.jsx")
+);
 
 function App() {
   return (
