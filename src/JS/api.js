@@ -1,63 +1,76 @@
 import axios from "axios";
 
-const API_KEY = "ff7c0b7d084ebf7da50b5241b5fb5a96";
-const BASE_URL = "https://api.themoviedb.org/3/";
-
-//request trend movie
-export const requestMovie = async (query) => {
-  const response = await axios.get(
-    "https://api.themoviedb.org/3/trending/movie/day",
-    {
-      params: {
-        api_key: API_KEY,
-      },
-    }
+export const getTrendingMovies = async () => {
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzODFlYzhkODY3MmRkYWI2NTdmNGIxYmY0OWJlZDBkMCIsIm5iZiI6MTcyNDE1MTE1OC4xNzM3NzYsInN1YiI6IjY2YzQ3MjNmNmZjOTZhZTZmYTFiMTIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Br_RUDajs37rxVwoaxbLMm9izTeu4cZsjsxM-jQRQCU",
+    },
+  };
+  const { data } = await axios.get(
+    "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
+    options
   );
 
-  return response.data.results;
+  return data;
 };
 
-export const requestDetailMovie = async (movieId) => {
-  const response = await axios.get(`${BASE_URL}movie/${movieId}`, {
-    params: {
-      api_key: API_KEY,
+export const getMovieDetails = async (movieId) => {
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzODFlYzhkODY3MmRkYWI2NTdmNGIxYmY0OWJlZDBkMCIsIm5iZiI6MTcyNDE1MTE1OC4xNzM3NzYsInN1YiI6IjY2YzQ3MjNmNmZjOTZhZTZmYTFiMTIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Br_RUDajs37rxVwoaxbLMm9izTeu4cZsjsxM-jQRQCU",
     },
-  });
-
-  return response.data;
-};
-
-export const requestMovieCast = async (movieId) => {
-  const response = await axios.get(`${BASE_URL}movie/${movieId}/credits`, {
-    params: {
-      api_key: API_KEY,
-    },
-  });
-
-  return response.data;
-};
-
-export const requestMovieReviews = async (movieId) => {
-  const response = await axios.get(`${BASE_URL}movie/${movieId}/reviews`, {
-    params: {
-      api_key: API_KEY,
-    },
-  });
-
-  return response.data;
-};
-
-//request movie
-
-export const requestQueryMovie = async (query) => {
-  const response = await axios.get(
-    `https://api.themoviedb.org/3/search/movie?query=${query}`,
-    {
-      params: {
-        api_key: API_KEY,
-      },
-    }
+  };
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}`,
+    options
   );
 
-  return response.data;
+  return data;
+};
+
+export const getMovieCredits = async (movieId) => {
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzODFlYzhkODY3MmRkYWI2NTdmNGIxYmY0OWJlZDBkMCIsIm5iZiI6MTcyNDE1MTE1OC4xNzM3NzYsInN1YiI6IjY2YzQ3MjNmNmZjOTZhZTZmYTFiMTIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Br_RUDajs37rxVwoaxbLMm9izTeu4cZsjsxM-jQRQCU",
+    },
+  };
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/credits`,
+    options
+  );
+
+  return data;
+};
+
+export const getMovieReviews = async (movieId) => {
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzODFlYzhkODY3MmRkYWI2NTdmNGIxYmY0OWJlZDBkMCIsIm5iZiI6MTcyNDE1MTE1OC4xNzM3NzYsInN1YiI6IjY2YzQ3MjNmNmZjOTZhZTZmYTFiMTIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Br_RUDajs37rxVwoaxbLMm9izTeu4cZsjsxM-jQRQCU",
+    },
+  };
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/reviews`,
+    options
+  );
+
+  return data;
+};
+
+export const getMovies = async (searchValue) => {
+  const options = {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzODFlYzhkODY3MmRkYWI2NTdmNGIxYmY0OWJlZDBkMCIsIm5iZiI6MTcyNDE1MTE1OC4xNzM3NzYsInN1YiI6IjY2YzQ3MjNmNmZjOTZhZTZmYTFiMTIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Br_RUDajs37rxVwoaxbLMm9izTeu4cZsjsxM-jQRQCU",
+    },
+  };
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?query=${searchValue}`,
+    options
+  );
+
+  return data;
 };

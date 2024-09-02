@@ -1,28 +1,24 @@
 import { NavLink } from "react-router-dom";
+import css from "./Navigation.module.css";
 import clsx from "clsx";
-import style from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
-    <header className={style.header}>
-      <div className={`container ${style.linksWrap}`}>
+    <header className={css.header}>
+      <nav className={css.nav}>
         <NavLink
+          className={({ isActive }) => clsx(css.link, isActive && css.active)}
           to="/"
-          className={({ isActive }) =>
-            clsx(style.link, isActive && style.active)
-          }
         >
           Home
         </NavLink>
         <NavLink
+          className={({ isActive }) => clsx(css.link, isActive && css.active)}
           to="/movies"
-          className={({ isActive }) =>
-            clsx(style.link, isActive && style.active)
-          }
         >
           Movies
         </NavLink>
-      </div>
+      </nav>
     </header>
   );
 };

@@ -1,22 +1,16 @@
 .header {
-  background-color: #05057a;
-  height: 10vh;
+  border-bottom: 1px solid black;
+  margin-bottom: 30px;
 }
-
-.linksWrap {
+.nav {
   display: flex;
-  align-items: center;
-  height: 100%;
+  gap: 20px;
 }
 
 .link {
-  padding: 4px;
-  font-size: 18px;
-  color: rgb(255, 255, 255);
-  transition: all 0.3s;
-  margin-right: 30px;
+  text-decoration: none;
+  color: black;
 }
-
-.link:hover {
-  color: #27ffb7;
+.active {
+  color: rgb(252, 130, 130);
 }

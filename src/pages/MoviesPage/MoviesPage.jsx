@@ -1,63 +1,55 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { requestQueryMovie } from "../../JS/api";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import Loader from "../../components/Loader/Loader";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import { getMovies } from "../../JS/api";
+import MovieList from "../../components/MovieList/MovieList";
+import { useSearchParams } from "react-router-dom";
 
-import style from "./MoviesPage.module.css";
-
-const MoviePage = () => {
-  const [movies, setMovies] = useState([]);
+const MoviesPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [movies, setMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("query") || "";
-  const location = useLocation();
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const queryValue = form.elements.query.value.trim();
-
-    if (queryValue === "") return;
-    setSearchParams({ query: queryValue });
-  };
+  const query = searchParams.get("query");
 
   useEffect(() => {
-    if (!query) return;
+    if (query === null) return;
 
     const fetchMovies = async () => {
       try {
-        const response = await requestQueryMovie(query);
-        setMovies(response.results);
-      } catch (error) {
-        console.log(error);
+        setIsLoading(true);
+        setError(null);
+
+        const moviesList = await getMovies(query);
+
+        setMovies(moviesList.results);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchMovies();
   }, [query]);
 
-  console.log(movies);
+  const onSearch = (searchValue) => {
+    setSearchParams({
+      query: searchValue,
+    });
+  };
+  const isMovies = Boolean(movies?.length);
   return (
-    <div className={`container ${style.wrap}`}>
-      <form onSubmit={handleSearch}>
-        <input type="text" name="query" defaultValue={query} />
-        <button type="submit">Search</button>
-      </form>
+    <div>
+      <SearchBar onSearch={onSearch} />
+      {isLoading && <Loader />}
+      {error && <ErrorMessage error={error} />}
 
-      <ul className={`${style.list}`}>
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <Link to={`${movie.id}`} state={{ from: location }}>
-              <img
-                className={style.img}
-                src={`https://image.tmdb.org/t/p/w500/` + movie.backdrop_path}
-                alt=""
-              />
-              <h3>{movie.title}</h3>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {isMovies && <MovieList movies={movies} />}
     </div>
   );
 };
 
-export default MoviePage;
+export default MoviesPage;
