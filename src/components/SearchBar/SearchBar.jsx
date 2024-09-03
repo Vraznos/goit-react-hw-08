@@ -1,28 +1,22 @@
-import toast from "react-hot-toast";
-
-const SearchBar = ({ onSearch }) => {
-  const handelSubmit = (event) => {
-    event.preventDefault();
-
-    const searchValue = event.currentTarget.search.value.trim();
-
-    if (searchValue === "") {
-      toast.error("Необхідно вести текст для пошуку зображення");
-    } else {
-      onSearch(searchValue);
-    }
+import { useDispatch, useSelector } from "react-redux";
+import css from "./SearchBar.module.css";
+import { changeFilter, selectNameFilter } from "../../redux/filtersSlice";
+const SearchBar = () => {
+  const dispatch = useDispatch();
+  const filterValue = useSelector(selectNameFilter);
+  const handleChange = (e) => {
+    dispatch(changeFilter(e.target.value));
   };
   return (
-    <form onSubmit={handelSubmit}>
+    <div className={css.search}>
+      <span>Find contacts by me</span>
       <input
-        name="search"
         type="text"
-        autoComplete="off"
-        autoFocus
-        placeholder="Search movies"
+        value={filterValue}
+        onChange={handleChange}
+        className={css.input}
       />
-      <button type="submit">Search</button>
-    </form>
+    </div>
   );
 };
 

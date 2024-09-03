@@ -1,34 +1,35 @@
-import { Route, Routes } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import ContactList from "../components/ContactList/ContactList";
+import ContactForm from "../components/ContactForm/ContactForm";
+import SearchBox from "../components/SearchBar/SearchBar";
 import css from "./App.module.css";
-import Loader from "./Loader/Loader";
 
-const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
-const MoviesPage = lazy(() => import("../pages/MoviesPage/MoviesPage"));
-const MovieDetailsPage = lazy(() =>
-  import("../pages/MovieDetailsPage/MovieDetailsPage")
-);
-const NotFoundPage = lazy(() => import("../pages/NotFoundPage/NotFoundPage"));
-const Navigation = lazy(() => import("./Navigation/Navigation"));
-const MovieCast = lazy(() => import("./MovieCast/MovieCast"));
-const MovieReviews = lazy(() => import("./MovieReviews/MovieReviews"));
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addContact,
+  deleteContact,
+  selectContacts,
+} from "../redux/contactsSlice";
+
+import { changeFilter } from "../redux/filtersSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const addContactForm = (contactObject) => {
+    dispatch(addContact(contactObject));
+  };
+
+  const DeleteContact = (contactId) => {
+    dispatch(deleteContact(contactId));
+  };
+
   return (
-    <>
-      <Navigation />
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviesPage />} />
-          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
-          </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </>
+    <div className={css.container}>
+      <h1 className={css.title}>Phonebook</h1>
+      <ContactForm onAddContact={addContactForm} />
+      <SearchBox />
+      <ContactList onDeleteContact={DeleteContact} />
+    </div>
   );
 }
 

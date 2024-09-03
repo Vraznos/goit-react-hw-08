@@ -1,67 +1,16 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.container {
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-p {
-  color: grey;
-  padding: 0;
+.title {
+  color: #6a5acd;
   margin: 0;
-  font-size: 16px;
-}
-
-h1 {
-  background: linear-gradient(167deg, #5463cb 34.27%, #4d40ac 56.59%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-transform: uppercase;
-  font-size: 32px;
+  /font-size: 2.5rem;
+  font-weight: bold;
   text-align: center;
-}
-
-h2 {
-  background: linear-gradient(167deg, #5463cb 34.27%, #4d40ac 56.59%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-transform: uppercase;
-  font-size: 24px;
-}
-
-h3 {
-  color: grey;
-  background-clip: text;
-  text-transform: uppercase;
-  padding: 0;
-  margin: 0;
-  font-size: 16px;
-}
-
-.section {
-  max-width: 1280px;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 40px;
-}
-
-a {
-  text-decoration: none;
-  color: grey;
-}
-
-a:hover {
-  text-decoration: none;
-  color: rgb(58, 58, 58);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
