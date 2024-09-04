@@ -1,61 +1,82 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { nanoid } from "nanoid";
+import { ErrorMessage, Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+
 import css from "./ContactForm.module.css";
+import { nanoid } from "nanoid";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
 
-const phoneRegExp = /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/;
-
-const ContactValidationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too long!")
-    .required("Required"),
-  number: Yup.string()
-    .matches(phoneRegExp, "Must be a valid phone number 'xxx-xx-xx'")
-    .required("Required"),
-});
-
-const initialValues = {
-  name: "",
-  number: "",
+const INITIAL_VALUES = {
+  userName: "",
+  userNumber: "",
 };
+
+const phoneRegExp = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+
+const ProfileValidationSchema = Yup.object().shape({
+  userName: Yup.string()
+    .required("Name is required")
+    .min(3, "Too short")
+    .max(50, "Too long"),
+  userNumber: Yup.string()
+    .matches(phoneRegExp, "Number should to use this format 'xxx-xxx-xxxx'")
+    .required("Number is required"),
+});
 
 const ContactForm = () => {
   const dispatch = useDispatch();
 
+  const onAddUserContact = (contact) => {
+    const thunk = addContact(contact);
+
+    dispatch(thunk);
+  };
   const handleSubmit = (values, actions) => {
     const contactObject = {
-      id: nanoid(),
-      name: values.name,
-      number: values.number,
+      name: values.userName,
+      number: values.userNumber,
     };
-    dispatch(addContact(contactObject));
+    onAddUserContact(contactObject);
+    console.log(values);
     actions.resetForm();
   };
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={INITIAL_VALUES}
       onSubmit={handleSubmit}
-      validationSchema={ContactValidationSchema}
+      validationSchema={ProfileValidationSchema}
     >
       <Form className={css.form}>
-        <div className={css.box}>
-          <label htmlFor="name">Name</label>
-          <Field type="text" id="name" name="name" />
-          <ErrorMessage name="name" component="div" />
-        </div>
-        <div className={css.box}>
-          <label htmlFor="number">Number</label>
-          <Field type="text" id="number" name="number" />
-          <ErrorMessage name="number" component="div" />
-        </div>
-        <div className={css.btnField}>
-          <button type="submit" className={css.btn}>
-            Add Contact
-          </button>
-        </div>
+        <label className={css.label}>
+          <span>Name</span>
+          <Field
+            className={css.formInput}
+            type="text"
+            name="userName"
+            placeholder=""
+          />
+          <ErrorMessage
+            className={css.errorText}
+            name="userName"
+            component="span"
+          />
+        </label>
+        <label className={css.label}>
+          <span>Number</span>
+          <Field
+            className={css.formInput}
+            type="text"
+            name="userNumber"
+            placeholder=""
+          />
+          <ErrorMessage
+            className={css.errorText}
+            name="userNumber"
+            component="span"
+          />
+        </label>
+        <button type="submit">Add contact</button>
       </Form>
     </Formik>
   );

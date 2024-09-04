@@ -1,31 +1,42 @@
-import { useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
 import css from "./ContactList.module.css";
-import { selectContacts } from "../../redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectContacts,
+  selectContactsError,
+  selectContactsLoading,
+} from "../../redux/contactsSlice";
 import { selectNameFilter } from "../../redux/filtersSlice";
-
+import { deleteContact } from "../../redux/contactsOps";
+import Loader from "../Loader/Loader";
+import { selectFilteredContacts } from "../../redux/selectors";
 const ContactList = () => {
-  const contacts = useSelector(selectContacts);
-  const filterValue = useSelector(selectNameFilter);
+  const filteredContacts = useSelector(selectFilteredContacts);
+  const loader = useSelector(selectContactsLoading);
+  const error = useSelector(selectContactsError);
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filterValue.toLowerCase())
-  );
+  const dispatch = useDispatch();
+  const onDeleteContact = (contactId) => {
+    const thunk = deleteContact(contactId);
+
+    dispatch(thunk);
+  };
 
   return (
-    <ul className={css.list}>
-      {filteredContacts.map((contact) => {
-        return (
-          <li key={contact.id} className={css.listItem}>
+    <>
+      {loader && <Loader />}
+      {error && <p>{error}</p>}
+      <ul className={css.contactList}>
+        {filteredContacts !== undefined &&
+          filteredContacts.map((contact) => (
             <Contact
-              id={contact.id}
-              name={contact.name}
-              number={contact.number}
+              onDeleteContact={onDeleteContact}
+              key={contact.id}
+              contact={contact}
             />
-          </li>
-        );
-      })}
-    </ul>
+          ))}
+      </ul>
+    </>
   );
 };
 

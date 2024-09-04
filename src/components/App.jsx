@@ -1,35 +1,26 @@
-import ContactList from "../components/ContactList/ContactList";
-import ContactForm from "../components/ContactForm/ContactForm";
-import SearchBox from "../components/SearchBar/SearchBar";
 import css from "./App.module.css";
-
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addContact,
-  deleteContact,
-  selectContacts,
-} from "../redux/contactsSlice";
-
-import { changeFilter } from "../redux/filtersSlice";
-
+import ContactForm from "../components/ContactForm/ContactForm";
+import SearchBox from "../components/SearchBox/SearchBar";
+import ContactList from "../components/ContactList/ContactList";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchContacts } from "../redux/contactsOps";
 function App() {
   const dispatch = useDispatch();
 
-  const addContactForm = (contactObject) => {
-    dispatch(addContact(contactObject));
-  };
-
-  const DeleteContact = (contactId) => {
-    dispatch(deleteContact(contactId));
-  };
-
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
   return (
-    <div className={css.container}>
-      <h1 className={css.title}>Phonebook</h1>
-      <ContactForm onAddContact={addContactForm} />
-      <SearchBox />
-      <ContactList onDeleteContact={DeleteContact} />
-    </div>
+    <>
+      <div>
+        <h1>Phonebook</h1>
+
+        <ContactForm />
+        <SearchBox />
+        <ContactList />
+      </div>
+    </>
   );
 }
 
