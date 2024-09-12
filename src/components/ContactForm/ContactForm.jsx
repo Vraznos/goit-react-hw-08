@@ -1,85 +1,95 @@
-import { ErrorMessage, Formik, Form, Field } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-
 import css from "./ContactForm.module.css";
-import { nanoid } from "nanoid";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsOps";
-
-const INITIAL_VALUES = {
-  userName: "",
-  userNumber: "",
-};
-
-const phoneRegExp = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
-
-const ProfileValidationSchema = Yup.object().shape({
-  userName: Yup.string()
-    .required("Name is required")
-    .min(3, "Too short")
-    .max(50, "Too long"),
-  userNumber: Yup.string()
-    .matches(phoneRegExp, "Number should to use this format 'xxx-xxx-xxxx'")
-    .required("Number is required"),
-});
+import { addContact } from "../../redux/contacts/operations";
+import toast from "react-hot-toast";
 
 const ContactForm = () => {
+  const phoneRegExp = /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/;
+
+  const ContactSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(2, "Name Is Too Short!")
+      .max(50, "Name Is Too Long!")
+      .required("Required Name"),
+    number: Yup.string()
+      .matches(phoneRegExp, "Phone number is not valid!")
+      .required("Required Number"),
+  });
+
+  const INITIALS_VALUES = {
+    name: "",
+    number: "",
+  };
+
   const dispatch = useDispatch();
 
-  const onAddUserContact = (contact) => {
-    const thunk = addContact(contact);
-
-    dispatch(thunk);
-  };
-  const handleSubmit = (values, actions) => {
-    const contactObject = {
-      name: values.userName,
-      number: values.userNumber,
+  const handleSubmit = (values, action) => {
+    const newContact = {
+      ...values,
     };
-    onAddUserContact(contactObject);
-    console.log(values);
-    actions.resetForm();
+    dispatch(addContact(newContact))
+      .unwrap()
+      .then((data) => {
+        toast.success(`Contact ${data.name} added!`);
+      });
+    action.resetForm();
   };
 
   return (
     <Formik
-      initialValues={INITIAL_VALUES}
+      initialValues={INITIALS_VALUES}
       onSubmit={handleSubmit}
-      validationSchema={ProfileValidationSchema}
+      validationSchema={ContactSchema}
     >
-      <Form className={css.form}>
-        <label className={css.label}>
-          <span>Name</span>
-          <Field
-            className={css.formInput}
-            type="text"
-            name="userName"
-            placeholder=""
-          />
-          <ErrorMessage
-            className={css.errorText}
-            name="userName"
-            component="span"
-          />
-        </label>
-        <label className={css.label}>
-          <span>Number</span>
-          <Field
-            className={css.formInput}
-            type="text"
-            name="userNumber"
-            placeholder=""
-          />
-          <ErrorMessage
-            className={css.errorText}
-            name="userNumber"
-            component="span"
-          />
-        </label>
-        <button type="submit">Add contact</button>
-      </Form>
+      {({ errors }) => (
+        <Form className={css.form}>
+          <p className={css.title}>Add New Contact:</p>
+          <label className={css.label}>
+            <span>Name</span>
+            <Field
+              className={css.input}
+              type="text"
+              name="name"
+              placeholder="Enter contact name..."
+              autoComplete="off"
+              required
+            />
+            <ErrorMessage
+              className={css.errorText}
+              name="name"
+              component="span"
+            />
+          </label>
+
+          <label className={css.label}>
+            <span>Number</span>
+            <Field
+              className={css.input}
+              type="tel"
+              name="number"
+              placeholder="Enter phone number as: xxx-xx-xx"
+              autoComplete="off"
+              required
+            />
+            <ErrorMessage
+              className={css.errorText}
+              name="number"
+              component="span"
+            />
+          </label>
+
+          <button
+            disabled={Object.keys(errors).length > 0}
+            className={css["form-btn"]}
+            type="submit"
+          >
+            Add contact ➕
+          </button>
+        </Form>
+      )}
     </Formik>
   );
 };
-
 export default ContactForm;

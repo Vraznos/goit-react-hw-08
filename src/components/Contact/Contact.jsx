@@ -1,29 +1,46 @@
-import { FaUserLarge, FaPhone } from "react-icons/fa6";
+import { FaUser } from "react-icons/fa6";
+import { FaPhone } from "react-icons/fa6";
 import css from "./Contact.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteContact } from "../../redux/contacts/operations";
+import { selectIsLoading } from "../../redux/contacts/selectors";
+import toast from "react-hot-toast";
 
-const Contact = ({ contact, onDeleteContact }) => {
+const Contact = ({ id, name, number }) => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+
+  const onDeleteContact = () => {
+    dispatch(deleteContact(id))
+      .unwrap()
+      .then((data) => {
+        toast.success(`Contact ${data.name} was deleted!`);
+      });
+  };
+
   return (
-    <li className={css.contactItem}>
-      <div className={css.contactWrapper}>
-        <div className={css.contactDetails}>
-          <FaUserLarge className={css.contactIcon} />
-          <p className={css.contactTitle}>{contact.name}</p>
-        </div>
-        <div className={css.contactDetails}>
-          <FaPhone className={css.contactIcon} />
-          <p>{contact.number}</p>
-        </div>
-      </div>
-
+    <>
+      <ul className={css["card-items"]}>
+        <li className={css["card-item"]}>
+          <FaUser />
+          &nbsp;
+          {name}
+        </li>
+        <li className={css["card-item"]}>
+          <FaPhone />
+          &nbsp;
+          {number}
+        </li>
+      </ul>
       <button
-        onClick={() => onDeleteContact(contact.id)}
-        className={css.contactBtn}
+        disabled={isLoading}
         type="button"
+        className={css["card-btn"]}
+        onClick={onDeleteContact}
       >
-        Delete
+        Delete&nbsp;❌
       </button>
-    </li>
+    </>
   );
 };
-
 export default Contact;

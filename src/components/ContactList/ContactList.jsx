@@ -1,43 +1,36 @@
 import Contact from "../Contact/Contact";
 import css from "./ContactList.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
-  selectContacts,
-  selectContactsError,
-  selectContactsLoading,
-} from "../../redux/contactsSlice";
-import { selectNameFilter } from "../../redux/filtersSlice";
-import { deleteContact } from "../../redux/contactsOps";
-import Loader from "../Loader/Loader";
-import { selectFilteredContacts } from "../../redux/selectors";
+  selectFilteredContacts,
+  selectIsLoading,
+  selectError,
+} from "../../redux/contacts/selectors";
+import { Loader } from "../../components/Loader";
+
 const ContactList = () => {
   const filteredContacts = useSelector(selectFilteredContacts);
-  const loader = useSelector(selectContactsLoading);
-  const error = useSelector(selectContactsError);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
-  const dispatch = useDispatch();
-  const onDeleteContact = (contactId) => {
-    const thunk = deleteContact(contactId);
-
-    dispatch(thunk);
-  };
-
-  return (
-    <>
-      {loader && <Loader />}
-      {error && <p>{error}</p>}
-      <ul className={css.contactList}>
-        {filteredContacts !== undefined &&
-          filteredContacts.map((contact) => (
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <ul className={css["card-list"]}>
+      {filteredContacts.map((contact) => {
+        return (
+          <li key={contact.id} className={css.card}>
             <Contact
-              onDeleteContact={onDeleteContact}
-              key={contact.id}
-              contact={contact}
+              name={contact.name}
+              number={contact.number}
+              id={contact.id}
             />
-          ))}
-      </ul>
-    </>
+          </li>
+        );
+      })}
+      {isLoading && "Please wait, Phonebook is loading..."}
+      {error && `${error}`}
+    </ul>
   );
 };
-
 export default ContactList;
