@@ -1,3 +1,17 @@
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  addContact,
+  deleteContact,
+  fetchContacts,
+  logOut, // Додано
+} from "./operations.js";
+
+const INITIAL_STATE = {
+  items: [],
+  loading: false,
+  error: null,
+};
+
 export const contactsSlice = createSlice({
   name: "contacts",
   initialState: INITIAL_STATE,
@@ -16,7 +30,6 @@ export const contactsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
       .addCase(deleteContact.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -31,7 +44,6 @@ export const contactsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
       .addCase(addContact.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -44,9 +56,9 @@ export const contactsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
       .addCase(logOut.fulfilled, (state) => {
         state.items = [];
+        state.error = null;
       }),
 });
 
