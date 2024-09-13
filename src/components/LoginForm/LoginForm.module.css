@@ -1,7 +1,7 @@
 .form {
   border-radius: 10px;
-  border: 1px solid #3c3c3c;
-  background-color: #88a884;
+  border: 1px solid #003366;
+  background-color: #e6f0fa;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -10,44 +10,57 @@
   min-width: 200px;
   margin: 0 auto;
 }
+
 .label {
   font-weight: 500;
+  color: #003366;
 }
+
 .input {
-  padding: 6px;
+  padding: 8px;
   border-radius: 10px;
-  border: 1px solid #3c3c3c;
+  border: 1px solid #003366;
   margin-bottom: 16px;
   outline: none;
   transition: border linear 250ms;
 }
-.input:focus,
-.input:hover {
-  border: 1px solid blue;
-}
+
 .input::placeholder {
   font-size: 14px;
+  color: #7a869a;
 }
+
+.input:hover,
+.input:focus {
+  border-color: #1e90ff;
+}
+
 .errorText {
   color: red;
   font-size: 14px;
   font-weight: 300;
   background-color: #f7bfd0;
   text-align: center;
+  border-radius: 5px;
+  padding: 8px;
 }
+
 .button {
   border-radius: 10px;
-  border: 1px solid #3c3c3c;
-  padding: 8px;
+  border: 1px solid #003366;
+  padding: 10px;
   font-weight: 500;
   max-width: 200px;
   min-width: 150px;
   margin: 0 auto;
-  line-height: 1;
+  line-height: 1.2;
+  background-color: #fff;
+  color: #003366;
   transition: background-color linear 250ms, color linear 250ms;
 }
+
 .button:hover {
   cursor: pointer;
-  background-color: #3c3c3c;
+  background-color: #1e90ff;
   color: #fff;
 }

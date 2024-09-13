@@ -5,22 +5,24 @@
   justify-content: center;
   gap: 16px;
 }
+
 .card {
   display: flex;
   justify-content: space-between;
   gap: 8px;
   align-items: center;
-  padding: 8px;
-  border: 1px solid #3c3c3c;
-  border-radius: 10px;
-  background-color: #88a884;
+  padding: 12px;
+  border: 1px solid #003366;
+  border-radius: 8px;
+  background-color: #e6f0fa;
   width: calc((100% - 48px) / 3);
-  min-width: 304px;
+  min-width: 320px;
   transition: border linear 250ms, box-shadow linear 250ms,
     background-color linear 250ms;
 }
+
 .card:hover {
-  border: 1px solid blue;
-  background-color: #c8d5c2;
-  box-shadow: 0px 12px 12px 0px #787b7c;
+  border: 1px solid #1e90ff;
+  background-color: #f0f8ff;
+  box-shadow: 0px 12px 15px 0px rgba(0, 51, 102, 0.2);
 }

@@ -3,24 +3,27 @@
   flex-wrap: wrap;
   gap: 10px;
 }
+
 .link {
   min-width: 40px;
   width: 80px;
   padding: 6px;
-  border: 1px solid black;
+  border: 1px solid #003366;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: #f0f8ff;
   text-align: center;
   transition: border-color linear 250ms, background-color linear 250ms,
     color linear 250ms;
 }
+
 .link:hover {
-  border-color: #0a500a;
+  border-color: #1e90ff;
   color: #fff;
-  background-color: #3c3c3c;
+  background-color: #003366;
 }
+
 .active {
-  background-color: #0a500a;
+  background-color: #1e90ff;
   color: #fff;
   font-weight: 500;
 }

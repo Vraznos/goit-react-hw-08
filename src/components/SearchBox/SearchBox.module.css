@@ -2,12 +2,13 @@
   font-size: 20px;
   font-weight: 700;
   text-align: center;
-  color: #0a500a;
+  color: #003366;
 }
+
 .filter-wrapper {
-  border: 1px solid #3c3c3c;
+  border: 1px solid #003366;
   border-radius: 10px;
-  background-color: #88a884;
+  background-color: #e6f2ff;
   padding: 8px 8px;
   width: 400px;
   min-width: 300px;
@@ -17,6 +18,7 @@
   gap: 6px;
   margin-bottom: 16px;
 }
+
 .search-label {
   max-width: 320px;
   display: flex;
@@ -24,22 +26,26 @@
   gap: 16px;
   font-size: 18px;
   font-weight: 500;
+  color: #003366;
 }
+
 .search-input {
   min-width: 240px;
   width: 304px;
   padding: 6px 12px;
   outline: none;
-  border: 1px solid #3c3c3c;
+  border: 1px solid #003366;
   border-radius: 10px;
   font-size: 18px;
   transition: border-color linear 250ms;
 }
+
 .search-input:hover,
 .search-input:focus {
-  border-color: blue;
+  border-color: #1e90ff;
 }
+
 .search-input::placeholder {
   font-size: 14px;
-  color: #3c3c3c;
+  color: #003366;
 }

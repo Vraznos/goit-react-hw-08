@@ -1,24 +1,28 @@
 .links_wrap {
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
+
 .link {
-  min-width: 40px;
-  width: 80px;
-  padding: 6px;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: #fff;
+  min-width: 50px;
+  width: 90px;
+  padding: 8px;
+  border: 1px solid #003366;
+  border-radius: 8px;
+  background-color: #e6f0fa;
   text-align: center;
-  transition: background-color linear 250ms, color linear 250ms;
+  transition: background-color linear 250ms, color linear 250ms, transform 200ms;
 }
+
 .link:hover {
   color: #fff;
-  background-color: #3c3c3c;
+  background-color: #003366;
+  transform: scale(1.05);
   cursor: pointer;
 }
+
 .active {
-  background-color: #0a500a;
+  background-color: #00509e;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
 }

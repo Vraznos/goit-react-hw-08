@@ -1,7 +1,7 @@
 .form {
   border-radius: 10px;
-  border: 1px solid #3c3c3c;
-  background-color: #88a884;
+  border: 1px solid #003366;
+  background-color: #e6f2ff;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -10,44 +10,57 @@
   min-width: 200px;
   margin: 0 auto;
 }
+
 .label {
   font-weight: 500;
+  color: #003366;
 }
+
 .input {
   padding: 6px;
   border-radius: 10px;
-  border: 1px solid #3c3c3c;
+  border: 1px solid #003366;
   margin-bottom: 16px;
   outline: none;
   transition: border linear 250ms;
 }
+
 .input:focus,
 .input:hover {
-  border: 1px solid blue;
+  border: 1px solid #1e90ff;
 }
+
 .input::placeholder {
   font-size: 14px;
+  color: #003366;
 }
+
 .button {
   border-radius: 10px;
-  border: 1px solid #3c3c3c;
+  border: 1px solid #003366;
   padding: 8px;
   font-weight: 500;
   max-width: 200px;
   min-width: 150px;
   margin: 0 auto;
   line-height: 1;
+  background-color: #ffffff;
   transition: background-color linear 250ms, color linear 250ms;
 }
+
 .button:hover {
   cursor: pointer;
-  background-color: #3c3c3c;
+  background-color: #003366;
   color: #fff;
 }
+
 .errorText {
   color: red;
   font-size: 14px;
   font-weight: 300;
-  background-color: #f7bfd0;
+  background-color: #ffe6e6;
+  border: 1px solid #ff9999;
+  border-radius: 5px;
+  padding: 6px;
   text-align: center;
 }
